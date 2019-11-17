@@ -6,4 +6,5 @@
     <string name="photo">Select from Photo Library</string>
     <string name="icon">Icon</string>
     <string name="input">Insert book name here</string>
+    <string name="empty"></string>
 </resources>

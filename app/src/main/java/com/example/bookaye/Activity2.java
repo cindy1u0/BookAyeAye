@@ -35,10 +35,7 @@ public class Activity2 extends AppCompatActivity {
         selectFromPics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Gathers photo from album
-                //openActivity4();
-//                // Goes back to BookAye interface
-//                openActivity1();
+                openActivity4();
             }
         });
 
