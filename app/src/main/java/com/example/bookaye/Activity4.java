@@ -96,9 +96,12 @@ public class Activity4 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_CODE) {
+        if (resultCode == RESULT_OK && requestCode == PICK_CODE && image != null) {
             // set image to image view
             image.setImageURI(data.getData());
+        }
+        else {
+            finish();
         }
     }
 }

@@ -41,12 +41,6 @@ public class Activity2 extends AppCompatActivity {
 
     }
 
-    // opens activity 1
-    public void openActivity1(){
-        Intent i = new Intent(this, Activity3.class);
-        startActivity(i);
-    }
-
     // opens activity 3
     public void openActivity3(){
         Intent i = new Intent(this, Activity3.class);

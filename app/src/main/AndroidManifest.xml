@@ -18,6 +18,10 @@
         <activity android:name=".Activity4"></activity>
         <activity android:name=".Activity3" />
 
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.bookaye.fileprovider"
