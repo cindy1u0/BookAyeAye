@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+//Page to select the image source: either take a photo or choose one from your library
 public class Activity2 extends AppCompatActivity {
 
     // Two buttons
