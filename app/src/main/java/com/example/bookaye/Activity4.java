@@ -26,6 +26,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -211,7 +212,13 @@ public class Activity4 extends AppCompatActivity {
 //            finish();
 //        }
     if (resultCode == RESULT_OK && requestCode == PICK_CODE && image != null) {
-      image.setImageResource(R.drawable.test);
+      new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          image.setImageResource(R.drawable.test);
+        }
+      }, 1000);
+//      image.setImageResource(R.drawable.test);
       path = getRealPathFromURI(data.getData());
       ExifInterface exifObject;
       try {
