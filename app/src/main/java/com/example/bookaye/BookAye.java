@@ -47,6 +47,7 @@ public class BookAye extends AppCompatActivity {
     // Redirects to activity 2
     public void openActivity2(){
         Intent i = new Intent(this, Activity2.class);
+        i.putExtra("bookName", inputText);
         startActivity(i);
     }
 }

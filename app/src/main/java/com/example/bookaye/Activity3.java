@@ -36,6 +36,9 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.ml.vision.text.RecognizedLanguage;
 
+import org.apache.commons.text.similarity.LevenshteinDetailedDistance;
+import org.apache.commons.text.similarity.LevenshteinDistance;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -138,6 +141,7 @@ public class Activity3 extends AppCompatActivity {
     }
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -149,19 +153,35 @@ public class Activity3 extends AppCompatActivity {
                 Bitmap imageRotate = rotateBitmap(BitmapFactory.decodeFile(currentPhotoPath),orientation);
                 final Bitmap mutableBitmap = imageRotate.copy(Bitmap.Config.ARGB_8888, true);
                 final Canvas canvas = new Canvas(mutableBitmap);
+                final String original = getIntent().getStringExtra("bookName");
                 FirebaseVisionImage fvimage = FirebaseVisionImage.fromBitmap(imageRotate);
                 FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
                         .getOnDeviceTextRecognizer();
                 Task<FirebaseVisionText> result = detector.processImage(fvimage).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                     @Override
                     public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                        Paint p = new Paint();
-                        p.setColor(Color.RED);
-                        p.setStyle(Paint.Style.STROKE);
+                        Paint red = new Paint();
+                        red.setColor(Color.RED);
+                        red.setStyle(Paint.Style.STROKE);
+                        Paint yellow = new Paint();
+                        yellow.setColor(Color.YELLOW);
+                        yellow.setStyle(Paint.Style.STROKE);
+                        int levenDist = 999999999;
+                        Rect min = new Rect();
+                        LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
                         for (FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks()) {
-                            Rect r = block.getBoundingBox();
-                            canvas.drawRect(r, p);
+                            int currentLeven = levenshteinDistance.apply(block.getText(), original);
+                            if (currentLeven < levenDist) {
+                                levenDist = currentLeven;
+                                min = block.getBoundingBox();
+                            }
                         }
+                        for (FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks()) {
+                            if (!min.equals(block.getBoundingBox())) {
+                                canvas.drawRect(block.getBoundingBox(), yellow);
+                            }
+                        }
+                        canvas.drawRect(min, red);
                         image.setImageBitmap(mutableBitmap);
                     }
                 });
