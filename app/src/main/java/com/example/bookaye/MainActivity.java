@@ -5,13 +5,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.ExifInterface;
+import android.media.Image;
+import android.media.ImageWriter;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.ml.vision.text.RecognizedLanguage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
@@ -25,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -128,6 +142,43 @@ public class MainActivity extends AppCompatActivity {
                 int orientation = exifObject.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
                 Bitmap imageRotate = rotateBitmap(BitmapFactory.decodeFile(currentPhotoPath),orientation);
                 this.image.setImageBitmap(imageRotate);
+                FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(imageRotate);
+                FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
+                        .getOnDeviceTextRecognizer();
+                final Task<FirebaseVisionText> result = detector.processImage(image)
+                        .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                            @Override
+                            public void onSuccess(FirebaseVisionText firebaseVisionText) {
+                                String resultText = firebaseVisionText.getText();
+                                for (FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks()) {
+                                    String blockText = block.getText();
+                                    Float blockConfidence = block.getConfidence();
+                                    List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
+                                    Point[] blockCornerPoints = block.getCornerPoints();
+                                    Rect blockFrame = block.getBoundingBox();
+                                    for (FirebaseVisionText.Line line: block.getLines()) {
+                                        String lineText = line.getText();
+                                        Float lineConfidence = line.getConfidence();
+                                        List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
+                                        Point[] lineCornerPoints = line.getCornerPoints();
+                                        Rect lineFrame = line.getBoundingBox();
+                                        for (FirebaseVisionText.Element element: line.getElements()) {
+                                            String elementText = element.getText();
+                                            Float elementConfidence = element.getConfidence();
+                                            List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
+                                            Point[] elementCornerPoints = element.getCornerPoints();
+                                            Rect elementFrame = element.getBoundingBox();
+                                        }
+                                    }
+                                }
+                                text.setText(resultText);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
             } catch (IOException e) {
                 e.printStackTrace();
             }
