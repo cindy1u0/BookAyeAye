@@ -53,6 +53,7 @@ public class Activity2 extends AppCompatActivity {
     // opens activity 4
     public void openActivity4(){
         Intent i = new Intent(this, Activity4.class);
+        i.putExtra("bookName", bookName);
         startActivity(i);
     }
 

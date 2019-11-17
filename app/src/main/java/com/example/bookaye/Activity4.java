@@ -104,6 +104,7 @@ public class Activity4 extends AppCompatActivity {
     // pick an image
     Intent intent = new Intent(Intent.ACTION_PICK);
     intent.setType("image/*");
+//    intent.setAction(Intent.ACTION_GET_CONTENT);
     startActivityForResult(intent, PICK_CODE);
   }
 
@@ -183,20 +184,20 @@ public class Activity4 extends AppCompatActivity {
     }
   }
 
-  private String getRealPathFromURI(Uri contentURI) {
-    String result;
-    String[] projection = {  MediaStore.Images.Media.DATA};
-    Cursor cursor = getContentResolver().query(contentURI, projection, null, null, null);
-    if (cursor == null) { // Source is Dropbox or other similar local file path
-      result = contentURI.getPath();
-    } else {
-      int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-      cursor.moveToFirst();
-      result = cursor.getString(idx);
-      cursor.close();
-      return result;
-    }
-    return result;
+  // And to convert the image URI to the direct file system path of the image file
+  public String getRealPathFromURI(Uri contentUri) {
+
+    // can post image
+    String[] proj = {MediaStore.Images.Media.DATA};
+    Cursor cursor = getContentResolver().query(contentUri,
+            proj, // Which columns to return
+            null,       // WHERE clause; which rows to return (all rows)
+            null,       // WHERE clause selection arguments (none)
+            null); // Order-by clause (ascending by name)
+    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    cursor.moveToFirst();
+
+    return cursor.getString(column_index);
   }
 
   @Override
@@ -210,7 +211,7 @@ public class Activity4 extends AppCompatActivity {
 //            finish();
 //        }
     if (resultCode == RESULT_OK && requestCode == PICK_CODE && image != null) {
-      image.setImageURI(data.getData());
+      image.setImageResource(R.drawable.test);
       path = getRealPathFromURI(data.getData());
       ExifInterface exifObject;
       try {

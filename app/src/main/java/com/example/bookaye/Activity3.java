@@ -164,7 +164,6 @@ public class Activity3 extends AppCompatActivity {
     this.sendBroadcast(mediaScanIntent);
   }
 
-
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     System.out.println("ACTIVITY RESULT: CODE: " + requestCode + "\t RESULT CODE: " + resultCode);
