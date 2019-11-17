@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BookAye</string>
+    <string name="title_activity_active">active</string>
+    <string name="book_aye">BookAye</string>
+    <string name="scan">Scan</string>
+    <string name="photo">Select from Photo Library</string>
+    <string name="icon">Icon</string>
+    <string name="input">Insert book name here</string>
 </resources>
