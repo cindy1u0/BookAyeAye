@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookAye">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00BE4545"
+    android:clickable="false"
+    tools:context=".BookAye">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="390dp"
+            android:layout_height="609dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginEnd="66dp"
+            android:background="#00FCF2F2"
+            android:contentDescription="@string/icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/bookayeicon" />
+
+        <EditText
+            android:id="@+id/textView3"
+            android:layout_width="317dp"
+            android:layout_height="71dp"
+            android:layout_marginBottom="44dp"
+            android:autofillHints=""
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="textShortMessage|textLongMessage|textCapCharacters"
+            android:selectAllOnFocus="true"
+            android:text="@string/input"
+            android:textColor="#DD050505"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
