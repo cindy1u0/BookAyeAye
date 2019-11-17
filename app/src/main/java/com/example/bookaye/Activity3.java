@@ -178,11 +178,11 @@ public class Activity3 extends AppCompatActivity {
         final Paint red = new Paint();
         red.setColor(Color.RED);
         red.setStyle(Paint.Style.STROKE);
-        red.setStrokeWidth(10);
+        red.setStrokeWidth(15);
         final Paint yellow = new Paint();
         yellow.setColor(Color.YELLOW);
         yellow.setStyle(Paint.Style.STROKE);
-        yellow.setStrokeWidth(10);
+        yellow.setStrokeWidth(15);
         final List<Bitmap> rotateds = new ArrayList<>();
         final LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
         List<Task<FirebaseVisionText>> tasks = new ArrayList<>();
