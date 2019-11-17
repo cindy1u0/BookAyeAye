@@ -1,16 +1,23 @@
 package com.example.bookaye;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+// MainActivity of BookAye
 public class BookAye extends AppCompatActivity {
 
     String inputText;
@@ -19,6 +26,11 @@ public class BookAye extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_aye);
+
+        final Integer CAMERA_REQ_CODE = 1;
+        // Checks for camera permissions. If not set then requests permission.
+        if (!checkPermission(Manifest.permission.CAMERA, CAMERA_REQ_CODE))
+            requestPermission(Manifest.permission.CAMERA, CAMERA_REQ_CODE);
 
         // Sets editor action listener when Enter is pressed in input Edit Text
         final EditText textInput = findViewById(R.id.textView3);
@@ -49,5 +61,22 @@ public class BookAye extends AppCompatActivity {
         Intent i = new Intent(this, Activity2.class);
         i.putExtra("bookName", inputText);
         startActivity(i);
+    }
+
+    // Function to check permission
+    public boolean checkPermission(String permission, int requestCode)
+    {
+        // Checking if permission is not granted
+        return !(ContextCompat.checkSelfPermission(BookAye.this, permission) == PackageManager.PERMISSION_DENIED);
+    }
+
+    // Function to request permission
+    public void requestPermission(String permission, int requestCode)
+    {
+        if (checkPermission(permission, requestCode)) {
+            Toast.makeText(BookAye.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(BookAye.this, new String[] { permission }, requestCode);
+        }
     }
 }

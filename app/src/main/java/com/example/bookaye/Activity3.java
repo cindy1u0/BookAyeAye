@@ -14,7 +14,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -167,6 +167,7 @@ public class Activity3 extends AppCompatActivity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    System.out.println("ACTIVITY RESULT: CODE: " + requestCode + "\t RESULT CODE: " + resultCode);
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       galleryAddPic();
       ExifInterface exifObject;
@@ -213,9 +214,9 @@ public class Activity3 extends AppCompatActivity {
               });
               if (block.isPresent()) {
                 Canvas canvas = new Canvas(rotateds.get(i));
-                for (FirebaseVisionText.TextBlock bl : result.getTextBlocks()) {
+                /*for (FirebaseVisionText.TextBlock bl : result.getTextBlocks()) {
                   canvas.drawRect(bl.getBoundingBox(), yellow);
-                }
+                }*/ //I want to skip drawing the yellow boxes
                 canvas.drawRect(block.get().getBoundingBox(), red);
                 if (finalBitMap == null) {
                   minLeven = levenshteinDistance.apply(original.toLowerCase(), block.get().getText().toLowerCase());
