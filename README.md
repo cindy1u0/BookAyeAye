@@ -5,7 +5,9 @@ When we walk into a library and are overwhelmed by the number of books it has, w
 
 # What it does
 BookAye either scans or reads in a picture of a bookshelf. Given the provided book title, the app will highlight where the book locates in the bookshelf picture. It not only recognizes the texts horizontally but also recognizes the texts sideway. When BookAye scans the picture, the app will process the picture and find the closest book title that ties to the given book name. It highlights it to inform where your desired book is. Moreover, it also allows the user to choose a picture from their photo gallery, and the app will work the same way as the previous method.
+
 ![detector](book.png)
+
 # How We built it
 We used Android Studio to build the app since we thought it makes the most sense. While building the user interface using basic listeners, we utilized the Google Vision API (ML Kit API) to read the texts from the image for the image processing part. 
 
