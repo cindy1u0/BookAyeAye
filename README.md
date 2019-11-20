@@ -26,5 +26,5 @@ BookAye has lots of room for expansion. The current product uses text-recognitio
 ## Contributors
 [Amy Ying](https://github.com/amywhying), [Cindy Luo](https://github.com/cindy1u0), [Oliver Dai](https://github.com/olliezdai13), and [Lucas Segawa](https://github.com/Segawa-NEU)
 
-BostonHacks 2019 Google API Honorable mention
+BostonHacks 2019 Google API Honorable Mention
 [https://devpost.com/software/bookayeaye](https://devpost.com/software/bookayeaye)
